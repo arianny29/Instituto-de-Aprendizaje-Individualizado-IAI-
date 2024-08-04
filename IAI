@@ -46,3 +46,46 @@ CREATE TABLE Materiales (
     url VARCHAR(255),
     FOREIGN KEY (curso_id) REFERENCES Cursos(curso_id)
 );
+4. Scripts para Extracción de Datos
+A continuación, algunos scripts SQL para extraer información relevante de la base de datos:
+
+a) Listar todos los cursos y sus instructores                    
+    C.nombre AS curso, 
+    C.descripcion, 
+    I.nombre AS instructor_nombre, 
+    I.apellido AS instructor_apellido 
+FROM 
+    Cursos C
+JOIN 
+    Instructores I ON C.instructor_id = I.instructor_id;
+b) Listar todos los estudiantes inscritos en un curso específico                          
+    E.nombre AS estudiante_nombre, 
+    E.apellido AS estudiante_apellido 
+FROM 
+    Inscripciones INS
+JOIN 
+    Estudiantes E ON INS.estudiante_id = E.estudiante_id
+WHERE 
+    INS.curso_id = ?; -- Reemplaza '?' con el ID del curso
+ Obtener materiales de un curso específico
+
+Copiar código
+SELECT 
+    M.nombre AS material_nombre, 
+    M.tipo, 
+    M.url 
+FROM 
+    Materiales M
+WHERE 
+    M.curso_id = ?; -- Reemplaza '?' con el ID del curso
+d) Listar todos los cursos en los que un estudiante está inscrito
+SELECT 
+    C.nombre AS curso, 
+    C.fecha_inicio, 
+    C.fecha_fin 
+FROM 
+    Inscripciones INS
+JOIN 
+    Cursos C ON INS.curso_id = C.curso_id
+WHERE 
+    INS.estudiante_id = ?; -- Reemplaza '?' con el ID del estudiante
